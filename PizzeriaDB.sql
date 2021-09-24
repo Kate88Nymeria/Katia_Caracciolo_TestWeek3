@@ -1,0 +1,25 @@
+CREATE DATABASE PizzeriaDaLuigi
+
+CREATE TABLE Pizza(
+IdPizza INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_Pizza PRIMARY KEY,
+Nome NVARCHAR(50) NOT NULL,
+Prezzo DECIMAL(5,2) NOT NULL,
+CONSTRAINT CHK_PrezzoPizza CHECK (Prezzo > 0)
+)
+
+CREATE TABLE Ingrediente(
+IdIngrediente INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_Ingrediente PRIMARY KEY,
+Nome NVARCHAR(50) NOT NULL,
+Costo DECIMAL(5,2) NOT NULL,
+NumeroScorte INT NOT NULL,
+UnitaMisura NVARCHAR(20),
+CONSTRAINT CHK_CostoIngrediente CHECK (Costo > 0),
+CONSTRAINT CHK_ScorteIngrediente CHECK (NumeroScorte >= 0)
+)
+
+CREATE TABLE Composizione(
+IdPizza INT NOT NULL,
+IdIngrediente INT NOT NULL,
+CONSTRAINT FK_Pizza FOREIGN KEY (IdPizza) REFERENCES Pizza(IdPizza),
+CONSTRAINT FK_Ingrediente FOREIGN KEY (IdIngrediente) REFERENCES Ingrediente(IdIngrediente)
+)
